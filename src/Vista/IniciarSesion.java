@@ -54,6 +54,8 @@ public class IniciarSesion extends javax.swing.JFrame {
 
         FondoColor.setBackground(new java.awt.Color(220, 233, 255));
 
+        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/Logos/Logo_Descripcion.png"))); // NOI18N
+
         lbIVolver.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
         lbIVolver.setText("Volver");
         lbIVolver.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,10 +157,10 @@ public class IniciarSesion extends javax.swing.JFrame {
                     .addComponent(lblRegistro)
                     .addComponent(lblInicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
-                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(btnIniciarSesion)
                 .addContainerGap(128, Short.MAX_VALUE))
         );

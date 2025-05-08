@@ -78,10 +78,10 @@
                       <Component id="lblInicioSesion" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="txtCorreo" min="-2" pref="36" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                  <Component id="txtContrasena" min="-2" pref="35" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="txtCorreo" min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <Component id="txtContrasena" min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="btnIniciarSesion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="128" max="32767" attributes="0"/>
               </Group>
@@ -128,6 +128,11 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="imgLogo">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Vista/Imagenes/Logos/Logo_Descripcion.png"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbIVolver">
               <Properties>

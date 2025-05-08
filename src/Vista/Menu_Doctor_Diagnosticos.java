@@ -38,6 +38,8 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnIniciarSesion2 = new javax.swing.JButton();
+        btnIniciarSesion3 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -72,7 +74,7 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         FondoPrincipal.add(jScrollPane1);
-        jScrollPane1.setBounds(70, 120, 960, 460);
+        jScrollPane1.setBounds(70, 120, 960, 360);
 
         lblBuscar.setBackground(new java.awt.Color(255, 255, 255));
         lblBuscar.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
@@ -86,6 +88,28 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
         lblBuscar.setBounds(680, 40, 100, 34);
         FondoPrincipal.add(txtBuscar);
         txtBuscar.setBounds(790, 30, 220, 50);
+
+        btnIniciarSesion2.setBackground(new java.awt.Color(173, 220, 255));
+        btnIniciarSesion2.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
+        btnIniciarSesion2.setText("Eliminar");
+        btnIniciarSesion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesion2ActionPerformed(evt);
+            }
+        });
+        FondoPrincipal.add(btnIniciarSesion2);
+        btnIniciarSesion2.setBounds(890, 510, 139, 45);
+
+        btnIniciarSesion3.setBackground(new java.awt.Color(173, 220, 255));
+        btnIniciarSesion3.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
+        btnIniciarSesion3.setText("Registrar");
+        btnIniciarSesion3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesion3ActionPerformed(evt);
+            }
+        });
+        FondoPrincipal.add(btnIniciarSesion3);
+        btnIniciarSesion3.setBounds(710, 510, 150, 45);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,9 +133,21 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblBuscarMouseClicked
 
+    private void btnIniciarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesion2ActionPerformed
+
+    }//GEN-LAST:event_btnIniciarSesion2ActionPerformed
+
+    private void btnIniciarSesion3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesion3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIniciarSesion3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FondoPrincipal;
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnIniciarSesion1;
+    private javax.swing.JButton btnIniciarSesion2;
+    private javax.swing.JButton btnIniciarSesion3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblBuscar;

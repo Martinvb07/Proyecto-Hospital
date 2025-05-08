@@ -86,6 +86,8 @@ public class Menu_Doctor_Citas extends javax.swing.JInternalFrame {
         jTableCitas = new javax.swing.JTable();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnCancelar = new javax.swing.JButton();
+        btnVisto = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -120,7 +122,7 @@ public class Menu_Doctor_Citas extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTableCitas);
 
         FondoPrincipal.add(jScrollPane1);
-        jScrollPane1.setBounds(70, 120, 960, 460);
+        jScrollPane1.setBounds(70, 120, 960, 360);
 
         lblBuscar.setBackground(new java.awt.Color(255, 255, 255));
         lblBuscar.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
@@ -134,6 +136,28 @@ public class Menu_Doctor_Citas extends javax.swing.JInternalFrame {
         lblBuscar.setBounds(680, 40, 100, 34);
         FondoPrincipal.add(txtBuscar);
         txtBuscar.setBounds(790, 30, 220, 50);
+
+        btnCancelar.setBackground(new java.awt.Color(173, 220, 255));
+        btnCancelar.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        FondoPrincipal.add(btnCancelar);
+        btnCancelar.setBounds(880, 510, 150, 45);
+
+        btnVisto.setBackground(new java.awt.Color(173, 220, 255));
+        btnVisto.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
+        btnVisto.setText("Visto");
+        btnVisto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVistoActionPerformed(evt);
+            }
+        });
+        FondoPrincipal.add(btnVisto);
+        btnVisto.setBounds(710, 510, 110, 45);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,9 +181,19 @@ public class Menu_Doctor_Citas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblBuscarMouseClicked
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnVistoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVistoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FondoPrincipal;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnVisto;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableCitas;
     private javax.swing.JLabel lblBuscar;

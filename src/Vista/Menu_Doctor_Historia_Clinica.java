@@ -4,24 +4,35 @@
  */
 package Vista;
 
+import Controlador.HistoriaClinicaDAO;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author marti
  */
 public class Menu_Doctor_Historia_Clinica extends javax.swing.JInternalFrame {
+    private JDesktopPane escritorio; 
 
     /**
      * Creates new form Menu_Doctor_Diagnosticos
      */
-    public Menu_Doctor_Historia_Clinica() {
+    public Menu_Doctor_Historia_Clinica(JDesktopPane escritorio) {
         initComponents();
+         this.escritorio = escritorio;
+         cargarHistoriasClinicas();
+    }
+    
+    private void cargarHistoriasClinicas() {
+        // Obtener el modelo de la tabla con los datos de las historias clínicas
+        DefaultTableModel modelo = HistoriaClinicaDAO.obtenerHistoriasClinicas();
+        // Establecer el modelo de la tabla
+        jTable1.setModel(modelo);
     }
 
-    Menu_Doctor_Historia_Clinica(JDesktopPane escritorio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,6 +49,8 @@ public class Menu_Doctor_Historia_Clinica extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnRegistrar = new javax.swing.JButton();
+        btnVer = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -72,7 +85,7 @@ public class Menu_Doctor_Historia_Clinica extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         FondoPrincipal.add(jScrollPane1);
-        jScrollPane1.setBounds(70, 120, 960, 460);
+        jScrollPane1.setBounds(70, 120, 960, 400);
 
         lblBuscar.setBackground(new java.awt.Color(255, 255, 255));
         lblBuscar.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
@@ -86,6 +99,28 @@ public class Menu_Doctor_Historia_Clinica extends javax.swing.JInternalFrame {
         lblBuscar.setBounds(680, 40, 100, 34);
         FondoPrincipal.add(txtBuscar);
         txtBuscar.setBounds(790, 30, 220, 50);
+
+        btnRegistrar.setBackground(new java.awt.Color(173, 220, 255));
+        btnRegistrar.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        FondoPrincipal.add(btnRegistrar);
+        btnRegistrar.setBounds(710, 540, 150, 45);
+
+        btnVer.setBackground(new java.awt.Color(173, 220, 255));
+        btnVer.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
+        btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
+        FondoPrincipal.add(btnVer);
+        btnVer.setBounds(910, 540, 110, 45);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,9 +144,38 @@ public class Menu_Doctor_Historia_Clinica extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblBuscarMouseClicked
 
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        Menu_Doctor_Historia_Clinica_Registrar verventana = new Menu_Doctor_Historia_Clinica_Registrar();
+        escritorio.add(verventana);
+        verventana.show();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        // TODO add your handling code here:
+           int selectedRow = jTable1.getSelectedRow();
+
+    // Verificar si hay una fila seleccionada
+    if (selectedRow != -1) {
+        // Obtener el historiaId desde la tabla (asumiendo que es la primera columna o la columna oculta)
+        int historiaId = (int) jTable1.getValueAt(selectedRow, 0); // Ajusta el índice según la columna de historiaId
+
+        // Crear una nueva ventana para ver la historia clínica con el historiaId
+        Menu_Doctor_Historia_Clinica_VerHistoria ventanaVerHistoria = new Menu_Doctor_Historia_Clinica_VerHistoria(historiaId);
+        
+        // Agregar la ventana al escritorio
+        escritorio.add(ventanaVerHistoria);
+        ventanaVerHistoria.show();
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila.");
+    }
+    }//GEN-LAST:event_btnVerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FondoPrincipal;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnVer;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblBuscar;

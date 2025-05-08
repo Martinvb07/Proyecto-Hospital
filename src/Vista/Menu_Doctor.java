@@ -3,12 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import Controlador.PacienteDAO;
 
 /**
  *
  * @author marti
  */
 public class Menu_Doctor extends javax.swing.JFrame {
+    
+    PacienteDAO pacienteDAO = new PacienteDAO();
+    
 
     /**
      * Creates new form Menu_Doctor
@@ -16,6 +20,11 @@ public class Menu_Doctor extends javax.swing.JFrame {
     public Menu_Doctor() {
         initComponents();
         this.setLocationRelativeTo(null);
+
+        int totalPacientes = pacienteDAO.contarPacientes();
+
+        lbl1.setText(""+totalPacientes);
+        
     }
 
     /**
@@ -360,9 +369,9 @@ public class Menu_Doctor extends javax.swing.JFrame {
 
     private void lblHistoriasClinicasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHistoriasClinicasMouseClicked
         // TODO add your handling code here:
-        Menu_Doctor_Historia_Clinica verventana=new Menu_Doctor_Historia_Clinica();
+        Menu_Doctor_Historia_Clinica verventana = new Menu_Doctor_Historia_Clinica(escritorio);
         escritorio.add(verventana);
-        verventana.show();
+        verventana.setVisible(true);
     }//GEN-LAST:event_lblHistoriasClinicasMouseClicked
 
     private void lblTotalPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTotalPacientesMouseClicked

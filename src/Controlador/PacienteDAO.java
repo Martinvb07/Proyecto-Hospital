@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -225,6 +227,56 @@ public boolean actualizarPaciente(Paciente paciente) {
     }
 }
 
+    public int contarPacientes() {
+    String sql = "SELECT COUNT(*) FROM pacientes";
+    int total = 0;
 
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement stmt = con.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        
+        if (rs.next()) {
+            total = rs.getInt(1);
+        }
+        
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return total;
+    }
+    
+    public List<Paciente> obtenerPacientesNombre() {
+        List<Paciente> pacientes = new ArrayList<>();
+        String sql = "SELECT id, nombres FROM pacientes";  // Solo seleccionamos el id y nombres
 
+        try (Connection con = new ConexionBD().conexion();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setNombres(rs.getString("nombres"));
+                pacientes.add(paciente);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pacientes;
+    }
+    
+    public int obtenerIdPacientePorNombre(String nombre) {
+    int id = -1;
+    String sql = "SELECT id FROM pacientes WHERE nombres = ?";
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, nombre);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            id = rs.getInt("id");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return id;
+}
 }

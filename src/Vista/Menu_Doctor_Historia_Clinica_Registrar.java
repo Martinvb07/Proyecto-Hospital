@@ -4,6 +4,11 @@
  */
 package Vista;
 
+import Controlador.HistoriaClinicaDAO;
+import Controlador.PacienteDAO;
+import Modelo.Paciente;
+import java.util.List;
+
 /**
  *
  * @author marti
@@ -15,7 +20,20 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
      */
     public Menu_Doctor_Historia_Clinica_Registrar() {
         initComponents();
+        cargarPacientesEnComboBox();  // <-- Este es el nuevo llamado
+
     }
+    private void cargarPacientesEnComboBox() {
+         PacienteDAO pacienteDAO = new PacienteDAO(); // Asegúrate de tener esta clase
+         List<Paciente> listaPacientes = pacienteDAO.obtenerPacientesNombre();
+
+         cbPaciente.removeAllItems(); // Limpiamos el combo
+
+         cbPaciente.addItem("Seleccione"); // Primer ítem por defecto
+         for (Paciente p : listaPacientes) {
+         cbPaciente.addItem(p.getNombres());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,7 +48,6 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         lblTitulo = new javax.swing.JLabel();
         lblTituloFecha = new javax.swing.JLabel();
         lblTituloPaciente = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         cbPaciente = new javax.swing.JComboBox<>();
         lblTituloMotivoConsulta = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -51,7 +68,11 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         lblTituloHasta = new javax.swing.JLabel();
         dtDesde = new com.toedter.calendar.JDateChooser();
         dtHasta = new com.toedter.calendar.JDateChooser();
+        btnRegistrar = new javax.swing.JButton();
+        dtfecha = new com.toedter.calendar.JDateChooser();
 
+        setClosable(true);
+        setIconifiable(true);
         setTitle("Registro Historia Clinica");
 
         lblTitulo.setFont(new java.awt.Font("Sylfaen", 1, 38)); // NOI18N
@@ -112,6 +133,15 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         lblTituloHasta.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloHasta.setText("Hasta :");
 
+        btnRegistrar.setBackground(new java.awt.Color(173, 220, 255));
+        btnRegistrar.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -125,8 +155,8 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTituloFecha)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(lblTituloMotivoConsulta2)
@@ -134,7 +164,7 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                         .addComponent(lblTituloMotivoConsulta)
                         .addComponent(lblTituloMotivoConsulta1)
                         .addComponent(jScrollPane1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -160,8 +190,10 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(dtHasta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                                .addComponent(dtDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(52, 52, 52))
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,11 +202,12 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                 .addGap(17, 17, 17)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTituloFecha)
-                    .addComponent(lblTituloPaciente)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTituloFecha)
+                        .addComponent(lblTituloPaciente)
+                        .addComponent(cbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTituloMotivoConsulta1)
@@ -197,23 +230,26 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTituloDosis)
                             .addComponent(txtDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(lblTituloMotivoConsulta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTituloDesde)
                             .addComponent(dtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTituloHasta)
-                            .addComponent(dtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(dtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addComponent(btnRegistrar)
+                        .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblTituloMotivoConsulta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -235,17 +271,72 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         // TODO add your handling code here:
     }//GEN-LAST:event_cbDiagnosticoActionPerformed
 
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+         try {
+        String nombrePaciente = cbPaciente.getSelectedItem().toString();
+        if (nombrePaciente.equals("Seleccione")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un paciente.");
+            return;
+        }
+
+        // Obtener ID del paciente según nombre
+        PacienteDAO pacienteDAO = new PacienteDAO();
+        int idPaciente = pacienteDAO.obtenerIdPacientePorNombre(nombrePaciente);
+
+        String motivo = txaMotivoConsulta.getText();
+        String antecedentes = txaAntecedentes.getText();
+        String especialidad = cbEspecialidad.getSelectedItem().toString();
+        String diagnostico = cbDiagnostico.getSelectedItem().toString();
+        String medicamentos = txtMedicamentos.getText();
+        String dosis = txtDosis.getText();
+
+        java.util.Date fecha = new java.util.Date(); // Puedes usar jTextField1 si lo prefieres
+        java.util.Date desde = dtDesde.getDate();
+        java.util.Date hasta = dtHasta.getDate();
+
+        if (desde == null || hasta == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione fechas válidas.");
+            return;
+        }
+
+        HistoriaClinicaDAO hcDAO = new HistoriaClinicaDAO();
+        boolean registrado = hcDAO.insertarHistoriaClinica(
+            idPaciente,
+            new java.sql.Date(fecha.getTime()),
+            motivo,
+            antecedentes,
+            especialidad,
+            diagnostico,
+            medicamentos,
+            dosis,
+            new java.sql.Date(desde.getTime()),
+            new java.sql.Date(hasta.getTime())
+        );
+
+        if (registrado) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Historia clínica registrada correctamente.");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar la historia clínica.");
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbDiagnostico;
     private javax.swing.JComboBox<String> cbEspecialidad;
     private javax.swing.JComboBox<String> cbPaciente;
     private com.toedter.calendar.JDateChooser dtDesde;
     private com.toedter.calendar.JDateChooser dtHasta;
+    private com.toedter.calendar.JDateChooser dtfecha;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTituloDesde;
     private javax.swing.JLabel lblTituloDiagnostico;

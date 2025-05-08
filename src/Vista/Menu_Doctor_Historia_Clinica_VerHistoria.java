@@ -4,19 +4,62 @@
  */
 package Vista;
 
+import Controlador.HistoriaClinicaDAO;
+import Modelo.HistoriaClinicaDetalle;
+
 /**
  *
  * @author marti
  */
 public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInternalFrame {
+        private int historiaId;
+
 
     /**
      * Creates new form Menu_Doctor_Historia_Clinica_Crear
      */
-    public Menu_Doctor_Historia_Clinica_VerHistoria() {
+    public Menu_Doctor_Historia_Clinica_VerHistoria(int historiaId) {
         initComponents();
-    }
+        this.historiaId = historiaId;
+        cargarDatosHistoria(historiaId);
 
+    }
+     
+    private void cargarDatosHistoria(int historiaId) {
+        // Obtener los detalles de la historia clínica usando el DAO
+        HistoriaClinicaDAO dao = new HistoriaClinicaDAO();
+        HistoriaClinicaDetalle detalle = dao.obtenerDetalleHistoria(historiaId);
+
+        // Verificamos si se ha obtenido un resultado
+        if (detalle != null) {
+            // Asignar los datos a los labels correspondientes
+            lblFecha.setText(detalle.getFecha());
+            lblMotivoConsulta.setText(detalle.getMotivoConsulta());
+            lblAntecedentes.setText(detalle.getAntecedentes());
+            lblDiagnostico.setText(detalle.getDiagnostico());
+            lblMedicamentos.setText(detalle.getMedicamentos());
+            lblFechaMedicamentos.setText(detalle.getDesde());
+            lblHasta.setText(detalle.getHasta());
+            lblPaciente.setText(detalle.getNombrePaciente());
+            lblTituloNombre.setText(detalle.getNombrePaciente());
+            lblNoDocumento.setText(detalle.getDocumentoPaciente());
+            lblEspecialidad.setText(detalle.getEspecialidad());
+            lblDosis.setText(detalle.getDosis());
+        } else {
+            // En caso de que no se obtengan datos, mostrar un mensaje de error o vacío.
+            lblFecha.setText("No disponible");
+            lblMotivoConsulta.setText("No disponible");
+            lblAntecedentes.setText("No disponible");
+            lblDiagnostico.setText("No disponible");
+            lblMedicamentos.setText("No disponible");
+            lblFechaMedicamentos.setText("No disponible");
+            lblHasta.setText("No disponible");
+            lblPaciente.setText("No disponible");
+            lblNoDocumento.setText("No disponible");
+            lblEspecialidad.setText("No disponible");
+            lblDosis.setText("No disponible");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +86,6 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblPaciente = new javax.swing.JLabel();
         lblFechaMedicamentos = new javax.swing.JLabel();
         lblEspecialidad = new javax.swing.JLabel();
-        lblPlanTratamientos = new javax.swing.JLabel();
         lblMedicamentos = new javax.swing.JLabel();
         lblTituloFecha = new javax.swing.JLabel();
         lblHasta = new javax.swing.JLabel();
@@ -51,36 +93,40 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblTituloMotivoConsulta = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         lblTituloDiagnostico = new javax.swing.JLabel();
+        lblDosis = new javax.swing.JLabel();
+        lblTituloDosis = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
         setTitle("Ver Historia Clinica");
-        setPreferredSize(new java.awt.Dimension(755, 379));
+        setPreferredSize(new java.awt.Dimension(731, 439));
 
         jPanel1.setLayout(null);
 
         lblTituloAntecedentes.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloAntecedentes.setText("Antecedentes :");
         jPanel1.add(lblTituloAntecedentes);
-        lblTituloAntecedentes.setBounds(90, 250, 133, 27);
+        lblTituloAntecedentes.setBounds(90, 290, 133, 27);
 
         lblMotivoConsulta.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblMotivoConsulta.setText("xxxxx");
         jPanel1.add(lblMotivoConsulta);
-        lblMotivoConsulta.setBounds(210, 190, 170, 27);
+        lblMotivoConsulta.setBounds(90, 250, 290, 27);
 
         lblAntecedentes.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblAntecedentes.setText("xxxxx");
         jPanel1.add(lblAntecedentes);
-        lblAntecedentes.setBounds(230, 250, 150, 27);
+        lblAntecedentes.setBounds(90, 320, 150, 27);
 
         lblDiagnostico.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblDiagnostico.setText("xxxxx");
         jPanel1.add(lblDiagnostico);
-        lblDiagnostico.setBounds(220, 130, 170, 27);
+        lblDiagnostico.setBounds(90, 160, 280, 50);
 
         lblTituloPlanTratamientos.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
-        lblTituloPlanTratamientos.setText("Plan de Tratamientos :");
+        lblTituloPlanTratamientos.setText("Plan de Tratamientos");
         jPanel1.add(lblTituloPlanTratamientos);
-        lblTituloPlanTratamientos.setBounds(400, 210, 208, 27);
+        lblTituloPlanTratamientos.setBounds(450, 210, 208, 27);
 
         lblTituloPaciente.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloPaciente.setText("Paciente : ");
@@ -105,17 +151,17 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblTituloNombre.setFont(new java.awt.Font("Sylfaen", 1, 38)); // NOI18N
         lblTituloNombre.setText("Nombre");
         jPanel1.add(lblTituloNombre);
-        lblTituloNombre.setBounds(440, 30, 160, 50);
+        lblTituloNombre.setBounds(390, 30, 330, 50);
 
         lblTituloHasta.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         lblTituloHasta.setText("Hasta :");
         jPanel1.add(lblTituloHasta);
-        lblTituloHasta.setBounds(400, 330, 60, 25);
+        lblTituloHasta.setBounds(400, 360, 60, 25);
 
         lblTituloFechaMedicamentos.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         lblTituloFechaMedicamentos.setText("Fecha :");
         jPanel1.add(lblTituloFechaMedicamentos);
-        lblTituloFechaMedicamentos.setBounds(400, 290, 60, 25);
+        lblTituloFechaMedicamentos.setBounds(400, 320, 60, 25);
 
         lblNoDocumento.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblNoDocumento.setText("xxxxx");
@@ -130,17 +176,12 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblFechaMedicamentos.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblFechaMedicamentos.setText("xxxxx");
         jPanel1.add(lblFechaMedicamentos);
-        lblFechaMedicamentos.setBounds(470, 290, 270, 27);
+        lblFechaMedicamentos.setBounds(470, 320, 270, 27);
 
         lblEspecialidad.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblEspecialidad.setText("xxxxx");
         jPanel1.add(lblEspecialidad);
         lblEspecialidad.setBounds(530, 170, 210, 27);
-
-        lblPlanTratamientos.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
-        lblPlanTratamientos.setText("xxxxx");
-        jPanel1.add(lblPlanTratamientos);
-        lblPlanTratamientos.setBounds(600, 210, 150, 27);
 
         lblMedicamentos.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblMedicamentos.setText("xxxxx");
@@ -155,7 +196,7 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblHasta.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblHasta.setText("xxxxx");
         jPanel1.add(lblHasta);
-        lblHasta.setBounds(480, 330, 260, 27);
+        lblHasta.setBounds(480, 360, 260, 27);
 
         lblFecha.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblFecha.setText("xxxxx");
@@ -163,31 +204,39 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblFecha.setBounds(163, 90, 230, 27);
 
         lblTituloMotivoConsulta.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
-        lblTituloMotivoConsulta.setText("<html>Motivo de <p>la consulta :</html>");
+        lblTituloMotivoConsulta.setText("Motivo de la consulta:");
         jPanel1.add(lblTituloMotivoConsulta);
-        lblTituloMotivoConsulta.setBounds(90, 170, 111, 54);
+        lblTituloMotivoConsulta.setBounds(90, 210, 200, 40);
 
         lblTitulo.setFont(new java.awt.Font("Sylfaen", 1, 38)); // NOI18N
-        lblTitulo.setText("Ver Historia Clinica");
+        lblTitulo.setText("Ver Historia Clinica :");
         jPanel1.add(lblTitulo);
-        lblTitulo.setBounds(80, 30, 343, 50);
+        lblTitulo.setBounds(27, 30, 365, 50);
 
         lblTituloDiagnostico.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloDiagnostico.setText("Diagnostico :");
         jPanel1.add(lblTituloDiagnostico);
         lblTituloDiagnostico.setBounds(90, 130, 119, 27);
 
+        lblDosis.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
+        lblDosis.setText("xxxxx");
+        jPanel1.add(lblDosis);
+        lblDosis.setBounds(470, 280, 270, 27);
+
+        lblTituloDosis.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblTituloDosis.setText("Dosis :");
+        jPanel1.add(lblTituloDosis);
+        lblTituloDosis.setBounds(400, 280, 60, 25);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
         );
 
         pack();
@@ -198,6 +247,7 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAntecedentes;
     private javax.swing.JLabel lblDiagnostico;
+    private javax.swing.JLabel lblDosis;
     private javax.swing.JLabel lblEspecialidad;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblFechaMedicamentos;
@@ -206,10 +256,10 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
     private javax.swing.JLabel lblMotivoConsulta;
     private javax.swing.JLabel lblNoDocumento;
     private javax.swing.JLabel lblPaciente;
-    private javax.swing.JLabel lblPlanTratamientos;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTituloAntecedentes;
     private javax.swing.JLabel lblTituloDiagnostico;
+    private javax.swing.JLabel lblTituloDosis;
     private javax.swing.JLabel lblTituloEspecialidad;
     private javax.swing.JLabel lblTituloFecha;
     private javax.swing.JLabel lblTituloFechaMedicamentos;
