@@ -20,20 +20,20 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
      */
     public Menu_Doctor_Historia_Clinica_Registrar() {
         initComponents();
-        cargarPacientesEnComboBox();  // <-- Este es el nuevo llamado
+        cargarPacientesEnComboBox();  
 
     }
     private void cargarPacientesEnComboBox() {
-         PacienteDAO pacienteDAO = new PacienteDAO(); // Asegúrate de tener esta clase
+         PacienteDAO pacienteDAO = new PacienteDAO(); 
          List<Paciente> listaPacientes = pacienteDAO.obtenerPacientesNombre();
 
-         cbPaciente.removeAllItems(); // Limpiamos el combo
+         cbPaciente.removeAllItems(); 
 
-         cbPaciente.addItem("Seleccione"); // Primer ítem por defecto
+         cbPaciente.addItem("Seleccione");
          for (Paciente p : listaPacientes) {
          cbPaciente.addItem(p.getNombres());
     }
-}
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,7 +58,6 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         lblTituloMotivoConsulta2 = new javax.swing.JLabel();
         cbEspecialidad = new javax.swing.JComboBox<>();
         lblTituloDiagnostico = new javax.swing.JLabel();
-        cbDiagnostico = new javax.swing.JComboBox<>();
         lblTituloPlanTratamientos = new javax.swing.JLabel();
         lblTituloMedicamentos = new javax.swing.JLabel();
         lblTituloDosis = new javax.swing.JLabel();
@@ -70,6 +69,8 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         dtHasta = new com.toedter.calendar.JDateChooser();
         btnRegistrar = new javax.swing.JButton();
         dtfecha = new com.toedter.calendar.JDateChooser();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txaDiagnostico = new javax.swing.JTextArea();
 
         setClosable(true);
         setIconifiable(true);
@@ -86,6 +87,11 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
 
         cbPaciente.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         cbPaciente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
+        cbPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPacienteActionPerformed(evt);
+            }
+        });
 
         lblTituloMotivoConsulta.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloMotivoConsulta.setText("Especialidad :");
@@ -109,14 +115,6 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
 
         lblTituloDiagnostico.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloDiagnostico.setText("Diagnostico :");
-
-        cbDiagnostico.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        cbDiagnostico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", " " }));
-        cbDiagnostico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbDiagnosticoActionPerformed(evt);
-            }
-        });
 
         lblTituloPlanTratamientos.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloPlanTratamientos.setText("Plan de Tratamientos");
@@ -142,6 +140,10 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
             }
         });
 
+        txaDiagnostico.setColumns(20);
+        txaDiagnostico.setRows(5);
+        jScrollPane3.setViewportView(txaDiagnostico);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -152,49 +154,50 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTituloFecha)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(dtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblTituloMotivoConsulta2)
-                        .addComponent(jScrollPane2)
-                        .addComponent(lblTituloMotivoConsulta)
-                        .addComponent(lblTituloMotivoConsulta1)
-                        .addComponent(jScrollPane1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                    .addComponent(lblTituloMotivoConsulta2)
+                    .addComponent(jScrollPane2)
+                    .addComponent(lblTituloMotivoConsulta)
+                    .addComponent(lblTituloMotivoConsulta1)
+                    .addComponent(jScrollPane1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lblTituloPaciente)
-                            .addGap(18, 18, 18)
-                            .addComponent(cbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lblTituloDiagnostico)
-                            .addGap(18, 18, 18)
-                            .addComponent(cbDiagnostico, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lblTituloMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtMedicamentos))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(88, 88, 88)
-                            .addComponent(lblTituloPlanTratamientos)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblTituloDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTituloDosis, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTituloHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(dtHasta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                                .addComponent(dtDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(52, 52, 52))
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblTituloPaciente)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblTituloDiagnostico)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblTituloMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblTituloDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblTituloDosis, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblTituloHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(dtHasta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                                        .addComponent(dtDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(52, 52, 52))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblTituloPlanTratamientos)
+                        .addGap(105, 105, 105))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,20 +212,20 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                         .addComponent(cbPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(dtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTituloMotivoConsulta1)
-                    .addComponent(lblTituloDiagnostico)
-                    .addComponent(cbDiagnostico, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTituloMotivoConsulta1)
+                            .addComponent(lblTituloDiagnostico))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(lblTituloMotivoConsulta2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblTituloPlanTratamientos)
-                        .addGap(31, 31, 31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTituloMedicamentos)
                             .addComponent(txtMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -250,7 +253,7 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
                         .addComponent(lblTituloMotivoConsulta)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -267,10 +270,6 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbDiagnosticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDiagnosticoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbDiagnosticoActionPerformed
-
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
          try {
         String nombrePaciente = cbPaciente.getSelectedItem().toString();
@@ -286,7 +285,7 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
         String motivo = txaMotivoConsulta.getText();
         String antecedentes = txaAntecedentes.getText();
         String especialidad = cbEspecialidad.getSelectedItem().toString();
-        String diagnostico = cbDiagnostico.getSelectedItem().toString();
+        String diagnostico = txaDiagnostico.getText();
         String medicamentos = txtMedicamentos.getText();
         String dosis = txtDosis.getText();
 
@@ -325,10 +324,13 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
     }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void cbPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPacienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbPacienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JComboBox<String> cbDiagnostico;
     private javax.swing.JComboBox<String> cbEspecialidad;
     private javax.swing.JComboBox<String> cbPaciente;
     private com.toedter.calendar.JDateChooser dtDesde;
@@ -337,6 +339,7 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTituloDesde;
     private javax.swing.JLabel lblTituloDiagnostico;
@@ -350,6 +353,7 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
     private javax.swing.JLabel lblTituloPaciente;
     private javax.swing.JLabel lblTituloPlanTratamientos;
     private javax.swing.JTextArea txaAntecedentes;
+    private javax.swing.JTextArea txaDiagnostico;
     private javax.swing.JTextArea txaMotivoConsulta;
     private javax.swing.JTextField txtDosis;
     private javax.swing.JTextField txtMedicamentos;

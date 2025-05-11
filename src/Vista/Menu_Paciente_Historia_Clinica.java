@@ -5,10 +5,7 @@
 package Vista;
 
 import Controlador.ControladorAcciones;
-import Controlador.CitaDAO;
 import Modelo.Paciente;
-import Controlador.PacienteDAO;
-import java.util.List;
 import javax.swing.JDesktopPane;
 
 

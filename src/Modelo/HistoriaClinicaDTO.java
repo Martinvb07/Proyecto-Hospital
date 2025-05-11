@@ -1,22 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
 
 import java.util.Date;
 
-/**
- *
- * @author marti
- */
 public class HistoriaClinicaDTO {
     private int id;
     private Date fecha;
     private String hora;
     private String paciente;
 
-    // Getters y Setters
+    // Campos adicionales para la tabla nueva
+    private int idPaciente;
+    private String descripcionDiagnostico;
+
+    // Getters y Setters existentes
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -28,4 +24,13 @@ public class HistoriaClinicaDTO {
 
     public String getPaciente() { return paciente; }
     public void setPaciente(String paciente) { this.paciente = paciente; }
+
+    // Getters y Setters nuevos
+    public int getIdPaciente() { return idPaciente; }
+    public void setIdPaciente(int idPaciente) { this.idPaciente = idPaciente; }
+
+    public String getDescripcionDiagnostico() { return descripcionDiagnostico; }
+    public void setDescripcionDiagnostico(String descripcionDiagnostico) {
+        this.descripcionDiagnostico = descripcionDiagnostico;
+    }
 }

@@ -5,8 +5,11 @@
 package Vista;
 
 import Controlador.ControladorAcciones;
+import Controlador.PacienteDAO;
 import Modelo.CitaMedica;
+import Modelo.Paciente;
 import Modelo.Sesion;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 
@@ -23,8 +26,9 @@ public class Menu_Paciente_Agendar_Cita_Medica extends javax.swing.JInternalFram
      */
     public Menu_Paciente_Agendar_Cita_Medica() {
         initComponents();
+        ControladorAcciones.cargarMedicosEnComboBox(cbMedicos);
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +46,7 @@ public class Menu_Paciente_Agendar_Cita_Medica extends javax.swing.JInternalFram
         lblHora = new javax.swing.JLabel();
         lblTituloMedico = new javax.swing.JLabel();
         lblTituloEspecialidad = new javax.swing.JLabel();
-        cbMedico = new javax.swing.JComboBox<>();
+        cbMedicos = new javax.swing.JComboBox<>();
         cbEspecialidad = new javax.swing.JComboBox<>();
         btnAgendar = new javax.swing.JButton();
 
@@ -132,18 +136,23 @@ public class Menu_Paciente_Agendar_Cita_Medica extends javax.swing.JInternalFram
         FondoPrincipal.add(lblTituloEspecialidad);
         lblTituloEspecialidad.setBounds(580, 280, 170, 34);
 
-        cbMedico.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        cbMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Martin Velasquez Baquero", "Luciana Guillot Forero", "Andres Suarez", "Jaider Cardona", "Sebastian Garcia" }));
-        cbMedico.addActionListener(new java.awt.event.ActionListener() {
+        cbMedicos.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        cbMedicos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
+        cbMedicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbMedicoActionPerformed(evt);
+                cbMedicosActionPerformed(evt);
             }
         });
-        FondoPrincipal.add(cbMedico);
-        cbMedico.setBounds(110, 330, 180, 31);
+        FondoPrincipal.add(cbMedicos);
+        cbMedicos.setBounds(110, 330, 180, 31);
 
         cbEspecialidad.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         cbEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Medicina General", "Cardiología", "Neurología", "Ginecología", "Obstetricia", "Pediatría", "Oftalmología", "Odontología" }));
+        cbEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEspecialidadActionPerformed(evt);
+            }
+        });
         FondoPrincipal.add(cbEspecialidad);
         cbEspecialidad.setBounds(570, 330, 190, 30);
 
@@ -205,7 +214,7 @@ public class Menu_Paciente_Agendar_Cita_Medica extends javax.swing.JInternalFram
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
         // TODO add your handling code here:
         String especialidad = cbEspecialidad.getSelectedItem().toString();
-        String medico = cbMedico.getSelectedItem().toString();
+        String medico = cbMedicos.getSelectedItem().toString();
         String documentoPaciente = Sesion.getPaciente().getDocumento(); // Asumiendo que guardaste el paciente al iniciar sesión
 
     CitaMedica cita = new CitaMedica.Builder()
@@ -222,16 +231,20 @@ public class Menu_Paciente_Agendar_Cita_Medica extends javax.swing.JInternalFram
     }
     }//GEN-LAST:event_btnAgendarActionPerformed
 
-    private void cbMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMedicoActionPerformed
+    private void cbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMedicosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbMedicoActionPerformed
+    }//GEN-LAST:event_cbMedicosActionPerformed
+
+    private void cbEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEspecialidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbEspecialidadActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FondoPrincipal;
     private javax.swing.JButton btnAgendar;
     private javax.swing.JComboBox<String> cbEspecialidad;
-    private javax.swing.JComboBox<String> cbMedico;
+    private javax.swing.JComboBox<String> cbMedicos;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblTituloEspecialidad;

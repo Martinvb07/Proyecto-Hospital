@@ -4,7 +4,13 @@
  */
 package Vista;
 
+import Controlador.ConexionBD;
+import Controlador.ControladorAcciones;
+import Controlador.HistoriaClinicaDAO;
+import java.sql.Connection;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,11 +23,17 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
      */
     public Menu_Doctor_Diagnosticos() {
         initComponents();
-    }
+       cargarHistoriasClinicas();
 
-    Menu_Doctor_Diagnosticos(JDesktopPane escritorio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+   
+ private void cargarHistoriasClinicas() {
+    // Llamamos al método para obtener el modelo de la tabla
+    DefaultTableModel modelo = HistoriaClinicaDAO.obtenerHistoriasClinicasConDiagnostico();
+    // Establecemos el modelo de la tabla
+    jTable1.setModel(modelo);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,8 +50,7 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        btnIniciarSesion2 = new javax.swing.JButton();
-        btnIniciarSesion3 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -89,27 +100,16 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
         FondoPrincipal.add(txtBuscar);
         txtBuscar.setBounds(790, 30, 220, 50);
 
-        btnIniciarSesion2.setBackground(new java.awt.Color(173, 220, 255));
-        btnIniciarSesion2.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
-        btnIniciarSesion2.setText("Eliminar");
-        btnIniciarSesion2.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(173, 220, 255));
+        btnEliminar.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIniciarSesion2ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        FondoPrincipal.add(btnIniciarSesion2);
-        btnIniciarSesion2.setBounds(890, 510, 139, 45);
-
-        btnIniciarSesion3.setBackground(new java.awt.Color(173, 220, 255));
-        btnIniciarSesion3.setFont(new java.awt.Font("Sylfaen", 1, 28)); // NOI18N
-        btnIniciarSesion3.setText("Registrar");
-        btnIniciarSesion3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIniciarSesion3ActionPerformed(evt);
-            }
-        });
-        FondoPrincipal.add(btnIniciarSesion3);
-        btnIniciarSesion3.setBounds(710, 510, 150, 45);
+        FondoPrincipal.add(btnEliminar);
+        btnEliminar.setBounds(890, 510, 139, 45);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,21 +133,13 @@ public class Menu_Doctor_Diagnosticos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblBuscarMouseClicked
 
-    private void btnIniciarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesion2ActionPerformed
-
-    }//GEN-LAST:event_btnIniciarSesion2ActionPerformed
-
-    private void btnIniciarSesion3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesion3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnIniciarSesion3ActionPerformed
-
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel FondoPrincipal;
-    private javax.swing.JButton btnIniciarSesion;
-    private javax.swing.JButton btnIniciarSesion1;
-    private javax.swing.JButton btnIniciarSesion2;
-    private javax.swing.JButton btnIniciarSesion3;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblBuscar;

@@ -6,6 +6,7 @@ package Vista;
 
 import Modelo.Sesion;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 
 
@@ -325,6 +326,7 @@ public class Menu_Paciente extends javax.swing.JFrame {
 
     private void lblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDashboardMouseClicked
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null ,"Ya estas en el menu");
         
     }//GEN-LAST:event_lblDashboardMouseClicked
 
@@ -345,10 +347,10 @@ public class Menu_Paciente extends javax.swing.JFrame {
     }//GEN-LAST:event_lblHistoriaClinicaMouseClicked
 
     private void lblPlanDeTratamientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPlanDeTratamientoMouseClicked
-        // TODO add your handling code here:
-        //Menu_Paciente_Plan_de_Tratamiento verventana=new Menu_Paciente_Plan_de_Tratamiento();
-        //escritorio.add(verventana);
-        //verventana.show();
+         //TODO add your handling code here:
+        Menu_Paciente_Plan_de_Tratamiento ventana = new Menu_Paciente_Plan_de_Tratamiento(escritorio, Sesion.getPaciente().getDocumento());
+        escritorio.add(ventana);
+        ventana.setVisible(true);
        
     }//GEN-LAST:event_lblPlanDeTratamientoMouseClicked
 

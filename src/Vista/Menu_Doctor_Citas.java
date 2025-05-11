@@ -7,7 +7,12 @@ package Vista;
 import Controlador.ControladorAcciones;
 import Modelo.CitaMedica;
 import Modelo.SesionDoctor;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -26,6 +31,8 @@ public class Menu_Doctor_Citas extends javax.swing.JInternalFrame {
         initComponents();
         this.controlador = new ControladorAcciones();
         cargarCitasDoctor();
+        agregarEditorFecha();
+        agregarEditorHora(); 
        
     }
     
@@ -35,7 +42,7 @@ public class Menu_Doctor_Citas extends javax.swing.JInternalFrame {
     ) {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column == 4; // Solo la columna "Acciones" es editable
+             return column == 1 || column == 2; // Fecha y Hora editables
         }
     };
 
@@ -64,13 +71,66 @@ public class Menu_Doctor_Citas extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = cargarModeloCitasDoctor(nombreDoctor);
     jTableCitas.setModel(modelo);
 }
+    
+    private void agregarEditorFecha() {
+        jTableCitas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila = jTableCitas.rowAtPoint(e.getPoint());
+                int columna = jTableCitas.columnAtPoint(e.getPoint());
 
-   
-   
-   
+                if (columna == 1) { // Columna "Fecha"
+                    JDateChooser dateChooser = new JDateChooser();
+                    dateChooser.setDateFormatString("dd/MM/yyyy");
+                    int result = JOptionPane.showConfirmDialog(null, dateChooser, "Seleccione nueva fecha", JOptionPane.OK_CANCEL_OPTION);
 
+                    if (result == JOptionPane.OK_OPTION) {
+                        java.util.Date selectedDate = dateChooser.getDate();
+                        if (selectedDate != null) {
+                            String nuevaFecha = new java.text.SimpleDateFormat("yyyy-MM-dd").format(selectedDate);
+                            int idCita = (int) jTableCitas.getValueAt(fila, 0);
+                            jTableCitas.setValueAt(nuevaFecha, fila, 1);
 
+                            controlador.actualizarFechaCita(idCita, nuevaFecha);
+                            JOptionPane.showMessageDialog(null, "Fecha actualizada correctamente.");
+                        }
+                    }
+                }
+            }
+        });
+    }
 
+    private void agregarEditorHora() {
+        jTableCitas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila = jTableCitas.rowAtPoint(e.getPoint());
+                int columna = jTableCitas.columnAtPoint(e.getPoint());
+
+                if (columna == 2) { // Columna "Hora"
+                    String[] horas = {
+                        "08:00", "08:30", "09:00", "09:30",
+                        "10:00", "10:30", "11:00", "11:30",
+                        "12:00", "14:00", "14:30", "15:00",
+                        "15:30", "16:00", "16:30", "17:00"
+                    };
+
+                    JComboBox<String> comboHoras = new JComboBox<>(horas);
+                    int result = JOptionPane.showConfirmDialog(null, comboHoras, "Seleccione nueva hora", JOptionPane.OK_CANCEL_OPTION);
+
+                    if (result == JOptionPane.OK_OPTION) {
+                        String nuevaHora = (String) comboHoras.getSelectedItem();
+                        int idCita = (int) jTableCitas.getValueAt(fila, 0);
+                        jTableCitas.setValueAt(nuevaHora, fila, 2);
+
+                        controlador.actualizarHoraCita(idCita, nuevaHora);
+                        JOptionPane.showMessageDialog(null, "Hora actualizada correctamente.");
+                    }
+                }
+            }
+        });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

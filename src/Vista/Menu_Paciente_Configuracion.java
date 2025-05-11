@@ -167,7 +167,7 @@ public class Menu_Paciente_Configuracion extends javax.swing.JInternalFrame {
             }
         });
         FondoPrincipal.add(lblNombre);
-        lblNombre.setBounds(170, 110, 310, 34);
+        lblNombre.setBounds(140, 90, 310, 34);
 
         lblFechaNacimiento.setBackground(new java.awt.Color(255, 255, 255));
         lblFechaNacimiento.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
@@ -177,7 +177,7 @@ public class Menu_Paciente_Configuracion extends javax.swing.JInternalFrame {
             }
         });
         FondoPrincipal.add(lblFechaNacimiento);
-        lblFechaNacimiento.setBounds(770, 110, 150, 34);
+        lblFechaNacimiento.setBounds(730, 80, 150, 40);
 
         lblTituloTipoDocumento1.setBackground(new java.awt.Color(255, 255, 255));
         lblTituloTipoDocumento1.setFont(new java.awt.Font("Sylfaen", 1, 26)); // NOI18N

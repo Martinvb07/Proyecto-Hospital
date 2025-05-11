@@ -106,22 +106,22 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblTituloAntecedentes.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloAntecedentes.setText("Antecedentes :");
         jPanel1.add(lblTituloAntecedentes);
-        lblTituloAntecedentes.setBounds(90, 290, 133, 27);
+        lblTituloAntecedentes.setBounds(90, 320, 133, 27);
 
         lblMotivoConsulta.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblMotivoConsulta.setText("xxxxx");
         jPanel1.add(lblMotivoConsulta);
-        lblMotivoConsulta.setBounds(90, 250, 290, 27);
+        lblMotivoConsulta.setBounds(90, 280, 290, 27);
 
         lblAntecedentes.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblAntecedentes.setText("xxxxx");
         jPanel1.add(lblAntecedentes);
-        lblAntecedentes.setBounds(90, 320, 150, 27);
+        lblAntecedentes.setBounds(90, 350, 280, 27);
 
         lblDiagnostico.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblDiagnostico.setText("xxxxx");
         jPanel1.add(lblDiagnostico);
-        lblDiagnostico.setBounds(90, 160, 280, 50);
+        lblDiagnostico.setBounds(10, 160, 380, 80);
 
         lblTituloPlanTratamientos.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloPlanTratamientos.setText("Plan de Tratamientos");
@@ -151,7 +151,7 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblTituloNombre.setFont(new java.awt.Font("Sylfaen", 1, 38)); // NOI18N
         lblTituloNombre.setText("Nombre");
         jPanel1.add(lblTituloNombre);
-        lblTituloNombre.setBounds(390, 30, 330, 50);
+        lblTituloNombre.setBounds(400, 30, 330, 50);
 
         lblTituloHasta.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
         lblTituloHasta.setText("Hasta :");
@@ -206,7 +206,7 @@ public class Menu_Doctor_Historia_Clinica_VerHistoria extends javax.swing.JInter
         lblTituloMotivoConsulta.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
         lblTituloMotivoConsulta.setText("Motivo de la consulta:");
         jPanel1.add(lblTituloMotivoConsulta);
-        lblTituloMotivoConsulta.setBounds(90, 210, 200, 40);
+        lblTituloMotivoConsulta.setBounds(90, 240, 210, 40);
 
         lblTitulo.setFont(new java.awt.Font("Sylfaen", 1, 38)); // NOI18N
         lblTitulo.setText("Ver Historia Clinica :");

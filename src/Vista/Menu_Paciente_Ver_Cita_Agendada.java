@@ -109,7 +109,7 @@ public class Menu_Paciente_Ver_Cita_Agendada extends javax.swing.JInternalFrame 
             }
         });
         FondoPrincipal.add(lblFecha);
-        lblFecha.setBounds(110, 160, 150, 34);
+        lblFecha.setBounds(120, 160, 280, 34);
 
         lblTituloHora.setBackground(new java.awt.Color(255, 255, 255));
         lblTituloHora.setFont(new java.awt.Font("Sylfaen", 1, 30)); // NOI18N
@@ -131,7 +131,7 @@ public class Menu_Paciente_Ver_Cita_Agendada extends javax.swing.JInternalFrame 
             }
         });
         FondoPrincipal.add(lblHora);
-        lblHora.setBounds(520, 160, 120, 34);
+        lblHora.setBounds(530, 160, 180, 34);
 
         lblTituloMedico.setBackground(new java.awt.Color(255, 255, 255));
         lblTituloMedico.setFont(new java.awt.Font("Sylfaen", 1, 30)); // NOI18N
@@ -153,7 +153,7 @@ public class Menu_Paciente_Ver_Cita_Agendada extends javax.swing.JInternalFrame 
             }
         });
         FondoPrincipal.add(lblMedico);
-        lblMedico.setBounds(40, 320, 330, 30);
+        lblMedico.setBounds(40, 310, 390, 40);
 
         lblTituloEspecialidad.setBackground(new java.awt.Color(255, 255, 255));
         lblTituloEspecialidad.setFont(new java.awt.Font("Sylfaen", 1, 30)); // NOI18N
@@ -175,7 +175,7 @@ public class Menu_Paciente_Ver_Cita_Agendada extends javax.swing.JInternalFrame 
             }
         });
         FondoPrincipal.add(lblEspecialidad);
-        lblEspecialidad.setBounds(470, 310, 220, 34);
+        lblEspecialidad.setBounds(490, 310, 250, 34);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

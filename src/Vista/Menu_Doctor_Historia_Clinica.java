@@ -155,8 +155,8 @@ public class Menu_Doctor_Historia_Clinica extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
            int selectedRow = jTable1.getSelectedRow();
 
-    // Verificar si hay una fila seleccionada
-    if (selectedRow != -1) {
+        // Verificar si hay una fila seleccionada
+        if (selectedRow != -1) {
         // Obtener el historiaId desde la tabla (asumiendo que es la primera columna o la columna oculta)
         int historiaId = (int) jTable1.getValueAt(selectedRow, 0); // Ajusta el índice según la columna de historiaId
 
@@ -166,9 +166,9 @@ public class Menu_Doctor_Historia_Clinica extends javax.swing.JInternalFrame {
         // Agregar la ventana al escritorio
         escritorio.add(ventanaVerHistoria);
         ventanaVerHistoria.show();
-    } else {
+        } else {
         JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila.");
-    }
+        }
     }//GEN-LAST:event_btnVerActionPerformed
 
 

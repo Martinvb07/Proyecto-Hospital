@@ -8,6 +8,7 @@ import Controlador.ControladorAcciones;
 import Modelo.Paciente;
 import Controlador.PacienteDAO;
 import Modelo.Sesion;
+import Modelo.SesionAdmin;
 import Modelo.SesionDoctor;
 import javax.swing.JOptionPane;
 
@@ -25,7 +26,8 @@ public class IniciarSesion extends javax.swing.JFrame {
     public IniciarSesion() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        SesionAdmin.getNombreAdmin();
+
 
     }
 
@@ -182,21 +184,22 @@ public class IniciarSesion extends javax.swing.JFrame {
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
     
     String correo = txtCorreo.getText();
-    String contrasena = txtContrasena.getText();
+String contrasena = txtContrasena.getText();
 
-    ControladorAcciones controlador = new ControladorAcciones();
-    String tipoUsuario = controlador.obtenerTipoUsuario(correo, contrasena);
+ControladorAcciones controlador = new ControladorAcciones();
+String tipoUsuario = controlador.obtenerTipoUsuario(correo, contrasena);
 
-    if ("doctor".equals(tipoUsuario)) {
-    String nombreDoctor = controlador.obtenerNombreDoctor(correo); // Obtiene el nombre
-    String apellidoDoctor = controlador.obtenerApellidoDoctor(correo); // Obtiene el apellido
+if ("doctor".equals(tipoUsuario)) {
+    String nombreDoctor = controlador.obtenerNombreDoctor(correo); 
+    String apellidoDoctor = controlador.obtenerApellidoDoctor(correo);
     SesionDoctor.setNombreDoctor(nombreDoctor);
     SesionDoctor.setApellidoDoctor(apellidoDoctor);
 
     Menu_Doctor menu = new Menu_Doctor();
     menu.setVisible(true);
     this.dispose();
-    } else if ("paciente".equals(tipoUsuario)) {
+
+} else if ("paciente".equals(tipoUsuario)) {
     Paciente paciente = PacienteDAO.validarYObtenerPaciente(correo, contrasena);
     if (paciente != null) {
         Sesion.setPaciente(paciente); // Guarda el paciente en sesión
@@ -206,7 +209,16 @@ public class IniciarSesion extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(this, "Error al cargar los datos del paciente.");
     }
-    } else {
+
+} else if ("admin".equals(tipoUsuario)) {
+    String nombreAdmin = controlador.obtenerNombreAdmin(correo); 
+    SesionAdmin.setNombreAdmin(nombreAdmin); // Guarda el nombre en sesión
+
+    Menu_Admin menu = new Menu_Admin(); // Asegúrate de tener esta clase creada
+    menu.setVisible(true);
+    this.dispose();
+
+} else {
     JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.");
 }
 

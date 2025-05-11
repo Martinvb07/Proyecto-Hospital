@@ -4,9 +4,18 @@ public class Paciente {
     private String nombres, apellidos, tipoDocumento, documento, fechaNacimiento;
     private String genero, tipoSangre, alergias, enfermedadesCronicas;
     private String celular, email, ocupacion, direccion, eps, contrasena;
-
+    private int id;
+    
     // Constructor vacío (necesario para setear luego)
     public Paciente() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     // Constructor con todos los campos (opcional)
@@ -64,4 +73,6 @@ public class Paciente {
     public void setDireccion(String direccion)                  { this.direccion = direccion; }
     public void setEps(String eps)                              { this.eps = eps; }
     public void setContrasena(String contrasena)                { this.contrasena = contrasena; }
+
+   
 }

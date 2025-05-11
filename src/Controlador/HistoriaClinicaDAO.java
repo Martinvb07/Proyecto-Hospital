@@ -69,7 +69,6 @@ public class HistoriaClinicaDAO {
     public HistoriaClinicaDetalle obtenerDetalleHistoria(int idHistoria) {
     HistoriaClinicaDetalle detalle = null;
 
-    // Corregimos la consulta SQL para obtener 'especialidad' desde 'historiaclinica'
     String sql = "SELECT hc.fecha, hc.motivo_consulta, hc.antecedentes, hc.diagnostico, " +
                  "hc.medicamentos, hc.dosis, hc.desde, hc.hasta, " +
                  "CONCAT(p.nombres, ' ', p.apellidos) AS nombrePaciente, " +
@@ -104,6 +103,71 @@ public class HistoriaClinicaDAO {
     }
 
     return detalle;
+}
+ public static DefaultTableModel obtenerHistoriasClinicasConDiagnostico() {
+    DefaultTableModel modelo = new DefaultTableModel(
+        new Object[]{"Id Paciente", "Descripción Diagnóstico", "Fecha Registro"}, 0
+    );
+
+    // Consulta para obtener las historias clínicas de todos los pacientes
+    String sql = "SELECT hc.id_paciente, hc.diagnostico, hc.fecha " +
+                 "FROM historiaclinica hc";
+
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement stmt = con.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        
+        // Recorrer el resultado y agregar cada fila a la tabla
+        while (rs.next()) {
+            modelo.addRow(new Object[]{
+                rs.getInt("id_paciente"),
+                rs.getString("diagnostico"),
+                rs.getString("fecha")
+            });
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al obtener las historias clínicas: " + e.getMessage());
+    }
+
+    return modelo;
+}
+
+ public static int contarDiagnosticos() {
+    int total = 0;
+    String sql = "SELECT COUNT(*) AS total FROM historiaclinica WHERE diagnostico IS NOT NULL";
+
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement stmt = con.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        if (rs.next()) {
+            total = rs.getInt("total");
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Error al contar los diagnósticos: " + e.getMessage());
+    }
+
+    return total;
+}
+ 
+ public static int contarHistorias() {
+    int total = 0;
+    String sql = "SELECT COUNT(*) AS total FROM historiaclinica";
+
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement stmt = con.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        if (rs.next()) {
+            total = rs.getInt("total");  // Usa el alias 'total'
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Error al contar las historias: " + e.getMessage());
+    }
+
+    return total;
 }
 
 }

@@ -9,12 +9,12 @@ import Controlador.ConexionBD;
 import Modelo.AccionesContacto;
 import Modelo.CitaMedica;
 import Modelo.Paciente;
-import Modelo.HistoriaClinica;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -42,9 +42,15 @@ public class ControladorAcciones {
     }
     
     //Cargar pacientes en Menu_Doctor
-    
+ 
     public DefaultTableModel obtenerPacientes(){
         return PacienteDAO.obtenerPacientes();
+    }
+    
+    //Cargar pacientes en Menu_Admin
+ 
+    public DefaultTableModel obtenerPacientesMenuAdmin(){
+        return PacienteDAO.obtenerPacientesAdmin();
     }
     
     //Validar datos del Inicio Sesion con los datos registrados en la DB
@@ -69,14 +75,45 @@ public class ControladorAcciones {
     // Validar el tipo de usuario (Paciente o Doctor)
     
     public String obtenerTipoUsuario(String correo , String contrasena){
-        if(DoctorDAO.validarUsuario(correo , contrasena)){
-           return "doctor";
-        } else if (PacienteDAO.validarUsuario(correo, contrasena)){
-           return "paciente";
-        } else {
-           return null;
-        }
+    if (DoctorDAO.validarUsuario(correo , contrasena)) {
+        return "doctor";
+    } else if (PacienteDAO.validarUsuario(correo, contrasena)) {
+        return "paciente";
+    } else if (validarAdmin(correo, contrasena)) {
+        return "admin";
+    } else {
+        return null;
     }
+}
+private boolean validarAdmin(String correo, String contrasena) {
+    String sql = "SELECT * FROM admins WHERE email = ? AND contraseña = ?";
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, correo);
+        ps.setString(2, contrasena);
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
+    } catch (SQLException e) {
+        System.err.println("Error al validar admin: " + e.getMessage());
+    }
+    return false;
+}
+
+public String obtenerNombreAdmin(String correo) {
+    String sql = "SELECT nombre FROM admins WHERE email = ?";
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, correo);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getString("nombre");
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al obtener nombre del admin: " + e.getMessage());
+    }
+    return null;
+}
+
     
     // Agendar Cita desde Menu paciente
     
@@ -120,6 +157,65 @@ public class ControladorAcciones {
     return modelo;
     }
     
+    public int obtenerIdPacientePorDocumento(String documento) {
+    int id = -1;
+    String sql = "SELECT id FROM pacientes WHERE numero_documento = ?";
+
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setString(1, documento);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            id = rs.getInt("id");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return id;
+}
+
+    
+    public DefaultTableModel obtenerModeloMedicamentosDelPaciente(String documentoPaciente) {
+    DefaultTableModel modelo = new DefaultTableModel(
+        new Object[]{"Medicamentos", "Dosis", "Desde", "Hasta"}, 0
+    );
+
+    int idPaciente = obtenerIdPacientePorDocumento(documentoPaciente);
+    if (idPaciente == -1) {
+        System.out.println("No se encontró el paciente con documento: " + documentoPaciente);
+        return modelo;
+    }
+
+    String sql = "SELECT medicamentos, dosis, desde, hasta FROM historiaclinica WHERE id_paciente = ?";
+    
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, idPaciente);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            modelo.addRow(new Object[]{
+                rs.getString("medicamentos"),
+                rs.getString("dosis"),
+                rs.getDate("desde"),
+                rs.getDate("hasta")
+            });
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return modelo;
+}
+
+
+    
     //Cargar Historia clinica
     public DefaultTableModel CargarModeloHistoriaDelPaciente(String documentoPaciente) {
     DefaultTableModel modelo1 = new DefaultTableModel(
@@ -135,13 +231,12 @@ public class ControladorAcciones {
 
     if (citas != null && !citas.isEmpty()) {
         for (CitaMedica cita : citas) {
-            // Añadir todas las citas, incluso si hay campos vacíos
             modelo1.addRow(new Object[]{
                 cita.getFecha() != null ? cita.getFecha() : "",
                 cita.getHora() != null ? cita.getHora() : "",
                 cita.getMedico() != null ? cita.getMedico() : "",
                 cita.getEspecialidad() != null ? cita.getEspecialidad() : "",
-                cita.getDiagnostico() != null ? cita.getDiagnostico() : ""
+                cita.getDiagnostico() != null ? cita.getDiagnostico() : ""  // Aquí asignamos el diagnóstico
             });
         }
     } else {
@@ -150,6 +245,7 @@ public class ControladorAcciones {
 
     return modelo1;
 }
+
     
     // Mostrar los datos mediante el ID en la BD
     
@@ -256,8 +352,18 @@ public class ControladorAcciones {
         return dao.obtenerCitasPorMedico(nombreMedico);
     }
     
-
-
-
+    public static void cargarMedicosEnComboBox(JComboBox<String> cbMedicos) {
+        List<String> medicos = DoctorDAO.obtenerNombresYApellidos();
+        for (String medico : medicos) {
+            cbMedicos.addItem(medico);
+        }
+    }
+    
+    public void actualizarHoraCita(int idCita, String nuevaHora) {
+    new CitaDAO().actualizarHora(idCita, nuevaHora);
 }
 
+public void actualizarFechaCita(int idCita, String nuevaFecha) {
+    new CitaDAO().actualizarFecha(idCita, nuevaFecha);
+}
+}

@@ -43,7 +43,10 @@ public class CitaDAO {
     
     public static List<CitaMedica> obtenerCitasPorPaciente(String documentoPaciente) {
     List<CitaMedica> citas = new ArrayList<>();
-    String sql = "SELECT * FROM citas WHERE documento_paciente = ?";
+    String sql = "SELECT c.id, c.fecha, c.hora, c.especialidad, c.medico, h.diagnostico " +
+                 "FROM citas c " +
+                 "LEFT JOIN historiaclinica h ON c.documento_paciente = h.id_paciente " +  
+                 "WHERE c.documento_paciente = ?";
 
     try (java.sql.Connection con = new ConexionBD().conexion();
          java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
@@ -58,7 +61,7 @@ public class CitaDAO {
                     .setHora(rs.getString("hora"))
                     .setEspecialidad(rs.getString("especialidad"))
                     .setMedico(rs.getString("medico"))
-                    .setDocumentoPaciente(rs.getString("documento_paciente"))
+                    .setDiagnostico(rs.getString("diagnostico")) // Si el diagnóstico se encuentra, lo añade
                     .build();
 
             citas.add(cita);
@@ -70,6 +73,7 @@ public class CitaDAO {
 
     return citas;
 }
+
     
     public static boolean eliminarCita(int id) {
     try (java.sql.Connection con = new ConexionBD().conexion();
@@ -189,8 +193,29 @@ public class CitaDAO {
     }
     return nombreMedico;
 }
-    
-    
+    public void actualizarHora(int idCita, String nuevaHora) {
+    String sql = "UPDATE citas SET hora = ? WHERE id = ?";
 
+    try (java.sql.Connection con = new ConexionBD().conexion();
+         java.sql.PreparedStatement stmt = con.prepareStatement(sql)) {  // No es necesario hacer cast
+        stmt.setString(1, nuevaHora);
+        stmt.setInt(2, idCita);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        System.err.println("Error al actualizar hora de la cita: " + e.getMessage());
+    }
 }
 
+public void actualizarFecha(int idCita, String nuevaFecha) {
+    String sql = "UPDATE citas SET fecha = ? WHERE id = ?";
+
+    try (java.sql.Connection con = new ConexionBD().conexion();
+         java.sql.PreparedStatement stmt = con.prepareStatement(sql)) {  // No es necesario hacer cast
+        stmt.setString(1, nuevaFecha);
+        stmt.setInt(2, idCita);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        System.err.println("Error al actualizar fecha de la cita: " + e.getMessage());
+    }
+}
+}

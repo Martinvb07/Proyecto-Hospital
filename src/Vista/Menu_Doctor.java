@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import Controlador.HistoriaClinicaDAO;
 import Controlador.PacienteDAO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +27,19 @@ public class Menu_Doctor extends javax.swing.JFrame {
 
         lbl1.setText(""+totalPacientes);
         
+        mostrarTotalDiagnosticos(); 
+        mostrarTotalHistorias();
+        
+    }
+    
+    private void mostrarTotalDiagnosticos() {
+    int total = HistoriaClinicaDAO.contarDiagnosticos();
+    lbl2.setText("" + total);
+    }
+    
+    private void mostrarTotalHistorias(){
+    int total = HistoriaClinicaDAO.contarHistorias();
+    lbl3.setText(""+ total);
     }
 
     /**
@@ -176,7 +191,7 @@ public class Menu_Doctor extends javax.swing.JFrame {
         });
 
         lblTotalDiagnosticos.setBackground(new java.awt.Color(255, 255, 255));
-        lblTotalDiagnosticos.setFont(new java.awt.Font("Sylfaen", 1, 30)); // NOI18N
+        lblTotalDiagnosticos.setFont(new java.awt.Font("Sylfaen", 1, 27)); // NOI18N
         lblTotalDiagnosticos.setText("Total Diagnósticos");
         lblTotalDiagnosticos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -186,7 +201,7 @@ public class Menu_Doctor extends javax.swing.JFrame {
 
         lbl2.setBackground(new java.awt.Color(255, 255, 255));
         lbl2.setFont(new java.awt.Font("Sylfaen", 1, 65)); // NOI18N
-        lbl2.setText("2");
+        lbl2.setText("X");
         lbl2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl2MouseClicked(evt);
@@ -198,18 +213,19 @@ public class Menu_Doctor extends javax.swing.JFrame {
         TotalDiagnosticosLayout.setHorizontalGroup(
             TotalDiagnosticosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TotalDiagnosticosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTotalDiagnosticos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalDiagnosticosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl2)
-                .addGap(114, 114, 114))
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(TotalDiagnosticosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalDiagnosticosLayout.createSequentialGroup()
+                        .addComponent(lbl2)
+                        .addGap(114, 114, 114))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalDiagnosticosLayout.createSequentialGroup()
+                        .addComponent(lblTotalDiagnosticos)
+                        .addGap(16, 16, 16))))
         );
         TotalDiagnosticosLayout.setVerticalGroup(
             TotalDiagnosticosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TotalDiagnosticosLayout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap(49, Short.MAX_VALUE)
                 .addComponent(lbl2)
                 .addGap(18, 18, 18)
                 .addComponent(lblTotalDiagnosticos)
@@ -237,7 +253,7 @@ public class Menu_Doctor extends javax.swing.JFrame {
 
         lbl1.setBackground(new java.awt.Color(255, 255, 255));
         lbl1.setFont(new java.awt.Font("Sylfaen", 1, 65)); // NOI18N
-        lbl1.setText("1");
+        lbl1.setText("X");
         lbl1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl1MouseClicked(evt);
@@ -288,7 +304,7 @@ public class Menu_Doctor extends javax.swing.JFrame {
 
         lbl3.setBackground(new java.awt.Color(255, 255, 255));
         lbl3.setFont(new java.awt.Font("Sylfaen", 1, 65)); // NOI18N
-        lbl3.setText("3");
+        lbl3.setText("X");
         lbl3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl3MouseClicked(evt);
@@ -341,9 +357,7 @@ public class Menu_Doctor extends javax.swing.JFrame {
 
     private void lblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDashboardMouseClicked
         // TODO add your handling code here:
-        Menu_Doctor_Dasbhoard verventana=new Menu_Doctor_Dasbhoard();
-        escritorio.add(verventana);
-        verventana.show();
+        JOptionPane.showMessageDialog(null ,"Ya estas en el menu");
     }//GEN-LAST:event_lblDashboardMouseClicked
 
     private void lblPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPacientesMouseClicked

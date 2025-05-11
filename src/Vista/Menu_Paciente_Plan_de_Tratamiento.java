@@ -4,9 +4,11 @@
  */
 package Vista;
 
+import Controlador.CitaDAO;
 import Controlador.ControladorAcciones;
-import javax.swing.table.TableColumn;
+import java.util.List;
 import javax.swing.JDesktopPane;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -15,20 +17,28 @@ import javax.swing.JDesktopPane;
  * @author marti
  */
 public class Menu_Paciente_Plan_de_Tratamiento extends javax.swing.JInternalFrame {
-   
-
+    
+    
     /**
      * Creates new form Menu_Doctor_TotalPacientes
      */
-    public Menu_Paciente_Plan_de_Tratamiento(JDesktopPane escritorio) {
+    public Menu_Paciente_Plan_de_Tratamiento(JDesktopPane escritorio, String documentoPaciente) {
         initComponents();
-       
-  
-        
+        cargarMedicamentos(documentoPaciente);
     }
     
-   
+    private void cargarMedicamentos(String documentoPaciente) {
+    ControladorAcciones controlador = new ControladorAcciones();
+    jTableMedicamentos.setModel(controlador.obtenerModeloMedicamentosDelPaciente(documentoPaciente));
 
+    // Ajustar anchos de columna si lo deseas
+    jTableMedicamentos.getColumnModel().getColumn(0).setPreferredWidth(200);
+    jTableMedicamentos.getColumnModel().getColumn(1).setPreferredWidth(100);
+    jTableMedicamentos.getColumnModel().getColumn(2).setPreferredWidth(100);
+    jTableMedicamentos.getColumnModel().getColumn(3).setPreferredWidth(100);
+}
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,7 +56,7 @@ public class Menu_Paciente_Plan_de_Tratamiento extends javax.swing.JInternalFram
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setIconifiable(true);
-        setTitle("Lista de Pacientes");
+        setTitle("Plan tratamiento");
         setPreferredSize(new java.awt.Dimension(1099, 664));
 
         FondoPrincipal.setBackground(new java.awt.Color(255, 255, 255));

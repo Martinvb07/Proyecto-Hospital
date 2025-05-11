@@ -1,10 +1,11 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Controlador;
 
 import Controlador.ConexionBD;
+import Modelo.Medico;
 import Modelo.Paciente;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -52,6 +53,92 @@ public class PacienteDAO {
     return modelo;
 }
     
+    public static DefaultTableModel obtenerPacientesAdmin() {
+    DefaultTableModel modelo = new DefaultTableModel();
+    modelo.addColumn("ID");
+    modelo.addColumn("Nombres");
+    modelo.addColumn("N° Documento");
+    modelo.addColumn("Email");
+    modelo.addColumn("EPS");
+
+    try (Connection con = new ConexionBD().conexion();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT id ,nombres, numero_documento, email, eps FROM pacientes")) {
+        
+        while (rs.next()) {
+            Object[] fila = {
+                rs.getString("id"),
+                rs.getString("nombres"),
+                rs.getString("numero_documento"),
+                rs.getString("email"),
+                rs.getString("eps"),
+                };
+                modelo.addRow(fila);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return modelo;
+}
+    
+    public Paciente obtenerPacientePorId(int id) {
+    Paciente paciente = null;
+    String sql = "SELECT * FROM pacientes WHERE id = ?";
+
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            paciente = new Paciente();
+            paciente.setId(rs.getInt("id"));
+            paciente.setNombres(rs.getString("nombres"));
+            paciente.setDocumento(rs.getString("numero_documento"));
+            paciente.setOcupacion(rs.getString("ocupacion"));
+            paciente.setEps(rs.getString("eps"));
+            paciente.setAlergias(rs.getString("alergias"));
+            paciente.setCelular(rs.getString("celular"));
+            paciente.setContrasena(rs.getString("contrasena"));
+            paciente.setDireccion(rs.getString("direccion"));
+            paciente.setEmail(rs.getString("email"));
+            paciente.setEnfermedadesCronicas(rs.getString("enfermedades_cronicas"));
+            paciente.setTipoDocumento(rs.getString("tipo_documento"));
+
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return paciente;
+    }
+
+ public boolean actualizarDatosPacienteAdmin(Paciente paciente) {
+    String sql = "UPDATE pacientes SET tipo_documento = ?, numero_documento = ?, alergias = ?, enfermedades_cronicas = ?, celular = ? , email = ?, direccion = ?, eps = ?, contrasena = ? WHERE id = ?";
+    
+    try (Connection con = new ConexionBD().conexion();
+         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, paciente.getTipoDocumento());
+            stmt.setString(2, paciente.getDocumento());
+            stmt.setString(3, paciente.getAlergias());
+            stmt.setString(4, paciente.getEnfermedadesCronicas());
+            stmt.setString(5, paciente.getCelular());
+            stmt.setString(6, paciente.getEmail());
+            stmt.setString(7, paciente.getDireccion());
+            stmt.setString(8, paciente.getEps());
+            stmt.setString(9, paciente.getContrasena());
+            stmt.setInt(10, paciente.getId());
+
+            int filasActualizadas = stmt.executeUpdate();
+            return filasActualizadas > 0;
+
+         } catch (SQLException e) {
+              System.err.println("Error al actualizar médico: " + e.getMessage());
+              return false;
+         }
+}    
 //Validar datos de la BD del paciente para iniciar sesion
     
 public static boolean validarUsuario(String correo, String contrasena) {
@@ -208,19 +295,17 @@ public boolean actualizarPaciente(Paciente paciente) {
     try (Connection con = new ConexionBD().conexion(); 
      PreparedStatement ps = con.prepareStatement(sql)) {
 
-     // Establecer los valores para los campos que se van a actualizar
      ps.setString(1, paciente.getTipoDocumento());
      ps.setString(2, paciente.getEmail());
      ps.setString(3, paciente.getCelular());
-     ps.setString(4, paciente.getDocumento()); // Suponiendo que 'numero_documento' es el campo único
+     ps.setString(4, paciente.getDocumento()); 
      ps.setString(5, paciente.getDireccion());
      ps.setString(6, paciente.getOcupacion());
 
-     // Establecer el valor de condición WHERE (se actualiza el paciente con el documento especificado)
      ps.setString(7, paciente.getDocumento());
 
      int rowsUpdated = ps.executeUpdate();
-     return rowsUpdated > 0; // Si la actualización fue exitosa
+     return rowsUpdated > 0; 
     } catch (SQLException e) {
      e.printStackTrace();
      return false;
