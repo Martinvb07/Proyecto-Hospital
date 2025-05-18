@@ -4,7 +4,6 @@
  */
 package Vista;
 import Controlador.DoctorDAO;
-import Controlador.HistoriaClinicaDAO;
 import Controlador.PacienteDAO;
 import javax.swing.JOptionPane;
 

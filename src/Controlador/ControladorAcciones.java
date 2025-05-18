@@ -87,7 +87,7 @@ public class ControladorAcciones {
 }
 private boolean validarAdmin(String correo, String contrasena) {
     String sql = "SELECT * FROM admins WHERE email = ? AND contraseña = ?";
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setString(1, correo);
         ps.setString(2, contrasena);
@@ -101,7 +101,7 @@ private boolean validarAdmin(String correo, String contrasena) {
 
 public String obtenerNombreAdmin(String correo) {
     String sql = "SELECT nombre FROM admins WHERE email = ?";
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setString(1, correo);
         ResultSet rs = ps.executeQuery();
@@ -161,7 +161,7 @@ public String obtenerNombreAdmin(String correo) {
     int id = -1;
     String sql = "SELECT id FROM pacientes WHERE numero_documento = ?";
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement ps = con.prepareStatement(sql)) {
 
         ps.setString(1, documento);
@@ -192,7 +192,7 @@ public String obtenerNombreAdmin(String correo) {
 
     String sql = "SELECT medicamentos, dosis, desde, hasta FROM historiaclinica WHERE id_paciente = ?";
     
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement ps = con.prepareStatement(sql)) {
 
         ps.setInt(1, idPaciente);
@@ -260,9 +260,9 @@ public String obtenerNombreAdmin(String correo) {
 
     public List<CitaMedica> obtenerCitasPorDoctor(String nombreMedico) {
         List<CitaMedica> lista = new ArrayList<>();
-        ConexionBD conexion = new ConexionBD();
+        
 
-        try (java.sql.Connection con = conexion.conexion()) {
+        try (Connection con = ConexionBD.getInstancia().getConexion()) {
             String sql = "SELECT * FROM citas WHERE medico = ?";
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreMedico);
@@ -292,7 +292,7 @@ public String obtenerNombreAdmin(String correo) {
     
     public String obtenerNombreDoctor(String correo) {
         String nombreDoctor = null;
-        try (Connection con = new ConexionBD().conexion()) {
+        try (Connection con = ConexionBD.getInstancia().getConexion()) {
             String sql = "SELECT nombres FROM doctores WHERE email = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, correo);
@@ -308,7 +308,7 @@ public String obtenerNombreAdmin(String correo) {
     
     public String obtenerApellidoDoctor(String correo) {
     String apellido = "";
-    try (Connection con = new ConexionBD().conexion()) {
+    try (Connection con = ConexionBD.getInstancia().getConexion()) {
         String sql = "SELECT apellidos FROM doctores WHERE email = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, correo);

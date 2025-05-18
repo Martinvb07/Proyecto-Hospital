@@ -5,6 +5,9 @@
 package Vista;
 
 import Controlador.ControladorAcciones;
+import Modelo.FactoryEnvioWhatsApp;
+import Modelo.FactoryManejadorContacto;
+import Modelo.ManejadorContacto;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,7 +63,7 @@ public class Contact extends javax.swing.JFrame {
         txtCelular = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
-        jButton1 = new javax.swing.JButton();
+        Enviar = new javax.swing.JButton();
         imgFondoWhatsap = new javax.swing.JLabel();
         imgFondoCorreo = new javax.swing.JLabel();
         imgFondoUbicacion = new javax.swing.JLabel();
@@ -180,11 +183,16 @@ public class Contact extends javax.swing.JFrame {
         FondoPrincipal.add(jScrollPane1);
         jScrollPane1.setBounds(100, 470, 560, 120);
 
-        jButton1.setBackground(new java.awt.Color(220, 233, 255));
-        jButton1.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
-        jButton1.setText("Enviar");
-        FondoPrincipal.add(jButton1);
-        jButton1.setBounds(100, 630, 110, 34);
+        Enviar.setBackground(new java.awt.Color(220, 233, 255));
+        Enviar.setFont(new java.awt.Font("Sylfaen", 1, 20)); // NOI18N
+        Enviar.setText("Enviar");
+        Enviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EnviarActionPerformed(evt);
+            }
+        });
+        FondoPrincipal.add(Enviar);
+        Enviar.setBounds(100, 630, 110, 34);
 
         imgFondoWhatsap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/Objetos/FondoWasap.png"))); // NOI18N
         imgFondoWhatsap.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -271,6 +279,28 @@ public class Contact extends javax.swing.JFrame {
          controlador.abrirUbicacion("Calle 15 #40-01, Villavicencio, Meta");
     }//GEN-LAST:event_imgFondoUbicacionMouseClicked
 
+    private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarActionPerformed
+        // TODO add your handling code here:// Obtener datos del formulario
+        String nombre = txtNombre.getText();
+        String correo = txtCorreo.getText();
+        String celular = txtCelular.getText();
+        String mensaje = jTextPane1.getText();
+        
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Correo: " + correo);
+        System.out.println("Celular: " + celular);
+        System.out.println("Mensaje: " + mensaje);
+
+
+        // Crear factory y manejador
+        FactoryManejadorContacto factory = new FactoryEnvioWhatsApp();
+        ManejadorContacto manejador = factory.crearManejador();
+
+        // Procesar el contacto, abrir WhatsApp
+        manejador.procesarContacto(nombre, correo, celular, mensaje);
+
+    }//GEN-LAST:event_EnviarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -307,6 +337,7 @@ public class Contact extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Enviar;
     private javax.swing.JPanel FondoPrincipal;
     private javax.swing.JLabel imgContacto;
     private javax.swing.JLabel imgDecoracionMenu;
@@ -315,7 +346,6 @@ public class Contact extends javax.swing.JFrame {
     private javax.swing.JLabel imgFondoWhatsap;
     private javax.swing.JLabel imgUbicacion;
     private javax.swing.JLabel imgWasap;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;

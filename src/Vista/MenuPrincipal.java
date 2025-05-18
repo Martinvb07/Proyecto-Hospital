@@ -14,8 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
-    ConexionBD con = new ConexionBD();
-    Connection cn = con.conexion();
+    Connection con = ConexionBD.getInstancia().getConexion();
     
     
     

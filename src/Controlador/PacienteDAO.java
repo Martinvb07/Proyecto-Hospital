@@ -5,15 +5,13 @@
 package Controlador;
 
 import Controlador.ConexionBD;
-import Modelo.Medico;
+import Modelo.ColeccionPacientes;
 import Modelo.Paciente;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,7 +31,7 @@ public class PacienteDAO {
     modelo.addColumn("EPS");
     modelo.addColumn("Opciones"); 
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery("SELECT nombres, numero_documento, ocupacion, eps FROM pacientes")) {
         
@@ -61,7 +59,7 @@ public class PacienteDAO {
     modelo.addColumn("Email");
     modelo.addColumn("EPS");
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery("SELECT id ,nombres, numero_documento, email, eps FROM pacientes")) {
         
@@ -85,7 +83,7 @@ public class PacienteDAO {
     Paciente paciente = null;
     String sql = "SELECT * FROM pacientes WHERE id = ?";
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
@@ -117,7 +115,7 @@ public class PacienteDAO {
  public boolean actualizarDatosPacienteAdmin(Paciente paciente) {
     String sql = "UPDATE pacientes SET tipo_documento = ?, numero_documento = ?, alergias = ?, enfermedades_cronicas = ?, celular = ? , email = ?, direccion = ?, eps = ?, contrasena = ? WHERE id = ?";
     
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, paciente.getTipoDocumento());
@@ -144,7 +142,7 @@ public class PacienteDAO {
 public static boolean validarUsuario(String correo, String contrasena) {
     boolean acceso = false;
 
-    try (Connection con = new ConexionBD().conexion()) {
+    try (Connection con = ConexionBD.getInstancia().getConexion()) {
         String sql = "SELECT * FROM pacientes WHERE email = ? AND contrasena = ?";
         PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql);
         ps.setString(1, correo);
@@ -167,7 +165,7 @@ public static boolean validarUsuario(String correo, String contrasena) {
 public static Paciente validarYObtenerPaciente(String correo, String contrasena) {
     Paciente p = null;
 
-    try (Connection con = new ConexionBD().conexion()) {
+    try (Connection con = ConexionBD.getInstancia().getConexion()) {
         String sql = "SELECT * FROM pacientes WHERE email = ? AND contrasena = ?";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, correo);
@@ -203,7 +201,7 @@ public static Paciente validarYObtenerPaciente(String correo, String contrasena)
 //Registro de Paciente
     
 public boolean registrarPaciente(Paciente p) {
-    try (Connection con = new ConexionBD().conexion()) {
+    try (Connection con = ConexionBD.getInstancia().getConexion()) {
         String sql = "INSERT INTO pacientes (nombres, apellidos, tipo_documento, numero_documento, fecha_nacimiento, genero, tipo_sangre, alergias, enfermedades_cronicas, celular, email, ocupacion, direccion, eps, contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(sql);
 
@@ -239,7 +237,7 @@ public Paciente obtenerPacientePorDocumento(String documento) {
     Paciente p = null;
     String sql = "SELECT * FROM pacientes WHERE numero_documento = ?";
     
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement ps = con.prepareStatement(sql)) {
 
         ps.setString(1, documento);
@@ -273,7 +271,7 @@ public Paciente obtenerPacientePorDocumento(String documento) {
 
 public static boolean eliminarPaciente(String documento) {
     String sql = "DELETE FROM pacientes WHERE numero_documento = ?";
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement pstmt = con.prepareStatement(sql)) {
 
         pstmt.setString(1, documento);
@@ -292,7 +290,7 @@ public static boolean eliminarPaciente(String documento) {
 public boolean actualizarPaciente(Paciente paciente) {
     String sql = "UPDATE pacientes SET tipo_documento = ?, email = ?, celular = ?, numero_documento = ?, direccion = ?, ocupacion = ? WHERE numero_documento = ?";
 
-    try (Connection con = new ConexionBD().conexion(); 
+    try (Connection con = ConexionBD.getInstancia().getConexion(); 
      PreparedStatement ps = con.prepareStatement(sql)) {
 
      ps.setString(1, paciente.getTipoDocumento());
@@ -316,7 +314,7 @@ public boolean actualizarPaciente(Paciente paciente) {
     String sql = "SELECT COUNT(*) FROM pacientes";
     int total = 0;
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
         
@@ -330,29 +328,31 @@ public boolean actualizarPaciente(Paciente paciente) {
     return total;
     }
     
-    public List<Paciente> obtenerPacientesNombre() {
-        List<Paciente> pacientes = new ArrayList<>();
-        String sql = "SELECT id, nombres FROM pacientes";  // Solo seleccionamos el id y nombres
+    public ColeccionPacientes obtenerPacientesNombre() {
+        ColeccionPacientes coleccion = new ColeccionPacientes();
+        String sql = "SELECT id, nombres FROM pacientes";  
 
-        try (Connection con = new ConexionBD().conexion();
+        try (Connection con = ConexionBD.getInstancia().getConexion();
              PreparedStatement stmt = con.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery(sql)) {
-            
+             ResultSet rs = stmt.executeQuery()) {
+
             while (rs.next()) {
                 Paciente paciente = new Paciente();
                 paciente.setNombres(rs.getString("nombres"));
-                pacientes.add(paciente);
+                coleccion.agregarPaciente(paciente);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return pacientes;
+
+         return coleccion;
     }
+
     
     public int obtenerIdPacientePorNombre(String nombre) {
     int id = -1;
     String sql = "SELECT id FROM pacientes WHERE nombres = ?";
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setString(1, nombre);
         ResultSet rs = ps.executeQuery();

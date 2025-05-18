@@ -21,7 +21,7 @@ public class HistoriaClinicaDAO {
                + "FROM historiaclinica hc "
                + "JOIN pacientes p ON hc.id_paciente = p.id";
 
-        try (Connection con = new ConexionBD().conexion();
+        try (Connection con = ConexionBD.getInstancia().getConexion();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -46,7 +46,7 @@ public class HistoriaClinicaDAO {
         String sql = "INSERT INTO historiaclinica (id_paciente, fecha, motivo_consulta, antecedentes, especialidad, diagnostico, medicamentos, dosis, desde, hasta) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = new ConexionBD().conexion();
+        try (Connection con = ConexionBD.getInstancia().getConexion();
             PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql)) {  // Ahora se usa la clase correcta
             ps.setInt(1, idPaciente);
             ps.setDate(2, new java.sql.Date(fecha.getTime()));  // Convertir Date a java.sql.Date
@@ -77,7 +77,7 @@ public class HistoriaClinicaDAO {
                  "JOIN pacientes p ON hc.id_paciente = p.id " +
                  "WHERE hc.id = ?";
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql)) {
 
         stmt.setInt(1, idHistoria);  // Establecer el ID de la historia clínica
@@ -113,7 +113,7 @@ public class HistoriaClinicaDAO {
     String sql = "SELECT hc.id_paciente, hc.diagnostico, hc.fecha " +
                  "FROM historiaclinica hc";
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
         
@@ -136,7 +136,7 @@ public class HistoriaClinicaDAO {
     int total = 0;
     String sql = "SELECT COUNT(*) AS total FROM historiaclinica WHERE diagnostico IS NOT NULL";
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
 
@@ -155,7 +155,7 @@ public class HistoriaClinicaDAO {
     int total = 0;
     String sql = "SELECT COUNT(*) AS total FROM historiaclinica";
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
 

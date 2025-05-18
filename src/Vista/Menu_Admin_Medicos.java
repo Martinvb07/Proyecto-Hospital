@@ -47,6 +47,17 @@ public class Menu_Admin_Medicos extends javax.swing.JInternalFrame {
     }
 
     tablaMedicos.setModel(modeloTabla);
+    
+        tablaMedicos.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tablaMedicos.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tablaMedicos.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tablaMedicos.getColumnModel().getColumn(3).setPreferredWidth(100);
+
+        // Ajustar altura de filas
+        tablaMedicos.setRowHeight(40);
+        tablaMedicos.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaMedicos.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaMedicos.getColumnModel().getColumn(0).setWidth(0);
 
     // Hacer invisible la columna del ID (si no deseas mostrarla)
     tablaMedicos.getColumnModel().getColumn(0).setMinWidth(0);

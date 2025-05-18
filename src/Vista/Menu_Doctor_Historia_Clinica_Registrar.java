@@ -6,6 +6,7 @@ package Vista;
 
 import Controlador.HistoriaClinicaDAO;
 import Controlador.PacienteDAO;
+import Modelo.ColeccionPacientes;
 import Modelo.Paciente;
 import java.util.List;
 
@@ -24,15 +25,15 @@ public class Menu_Doctor_Historia_Clinica_Registrar extends javax.swing.JInterna
 
     }
     private void cargarPacientesEnComboBox() {
-         PacienteDAO pacienteDAO = new PacienteDAO(); 
-         List<Paciente> listaPacientes = pacienteDAO.obtenerPacientesNombre();
+         PacienteDAO pacienteDAO = new PacienteDAO();
+         ColeccionPacientes coleccionPacientes = pacienteDAO.obtenerPacientesNombre();
 
-         cbPaciente.removeAllItems(); 
+        cbPaciente.removeAllItems();
+        cbPaciente.addItem("Seleccione");
 
-         cbPaciente.addItem("Seleccione");
-         for (Paciente p : listaPacientes) {
-         cbPaciente.addItem(p.getNombres());
-    }
+        for (Paciente p : coleccionPacientes) {
+            cbPaciente.addItem(p.getNombres());
+        }
     }
 
     /**

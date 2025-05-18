@@ -27,7 +27,7 @@ public class DoctorDAO {
     public static boolean validarUsuario(String correo, String contrasena) {
         String sql = "SELECT * FROM doctores WHERE email = ? AND contrasena = ?";
 
-        try (Connection con = new ConexionBD().conexion();
+        try (Connection con = ConexionBD.getInstancia().getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, correo);
@@ -48,7 +48,7 @@ public class DoctorDAO {
         List<String> medicos = new ArrayList<>();
         String sql = "SELECT nombres, apellidos FROM doctores";
 
-        try (Connection con = new ConexionBD().conexion();
+        try (Connection con = ConexionBD.getInstancia().getConexion();
              PreparedStatement stmt = con.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -68,7 +68,7 @@ public class DoctorDAO {
         List<Medico> medicos = new ArrayList<>();
         String sql = "SELECT id ,nombres, apellidos, email, telefono, especialidad FROM doctores"; 
 
-            try (Connection con = new ConexionBD().conexion();  
+            try (Connection con = ConexionBD.getInstancia().getConexion();
                  PreparedStatement stmt = con.prepareStatement(sql);  
                  ResultSet rs = stmt.executeQuery()) {  
 
@@ -97,7 +97,7 @@ public class DoctorDAO {
                      "email, telefono, direccion, contrasena, especialidad) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = new ConexionBD().conexion();
+        try (Connection con = ConexionBD.getInstancia().getConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, medico.getNombres());
@@ -125,7 +125,7 @@ public class DoctorDAO {
     Medico medico = null;
     String sql = "SELECT * FROM doctores WHERE id = ?";
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql)) {
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
@@ -159,7 +159,7 @@ public class DoctorDAO {
  public boolean actualizarDatosMedico(Medico medico) {
     String sql = "UPDATE doctores SET direccion = ?, especialidad = ?, email = ?, contrasena = ?, telefono = ? WHERE id = ?";
     
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, medico.getDireccion());
@@ -181,7 +181,7 @@ public class DoctorDAO {
     String sql = "SELECT COUNT(*) FROM doctores";
     int total = 0;
 
-    try (Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          PreparedStatement stmt = con.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
         

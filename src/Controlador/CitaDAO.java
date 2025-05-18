@@ -6,14 +6,11 @@ package Controlador;
 
 import Controlador.ConexionBD;
 import Modelo.CitaMedica;
-import Modelo.CitaMedica;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,7 +21,7 @@ public class CitaDAO {
     public static boolean guardarCita(CitaMedica cita) {
         String sql = "INSERT INTO citas (especialidad, medico, documento_paciente) VALUES (?, ?, ? )";
 
-        try (java.sql.Connection con = new ConexionBD().conexion();
+        try (java.sql.Connection con = ConexionBD.getInstancia().getConexion();
             java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, cita.getEspecialidad());
@@ -48,7 +45,7 @@ public class CitaDAO {
                  "LEFT JOIN historiaclinica h ON c.documento_paciente = h.id_paciente " +  
                  "WHERE c.documento_paciente = ?";
 
-    try (java.sql.Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
 
         ps.setString(1, documentoPaciente);
@@ -76,7 +73,7 @@ public class CitaDAO {
 
     
     public static boolean eliminarCita(int id) {
-    try (java.sql.Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          java.sql.PreparedStatement ps = con.prepareStatement("DELETE FROM citas WHERE id = ?")) {
          
         ps.setInt(1, id);
@@ -91,7 +88,7 @@ public class CitaDAO {
     public CitaMedica obtenerCitaPorId(int idCita) {
     CitaMedica cita = null;
 
-    try (java.sql.Connection con = new ConexionBD().conexion()) {
+    try (Connection con = ConexionBD.getInstancia().getConexion()) {
         String sql = "SELECT * FROM citas WHERE id = ?";
         java.sql.PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setInt(1, idCita);
@@ -116,9 +113,8 @@ public class CitaDAO {
     
     public List<CitaMedica> obtenerCitasPorMedico(String nombreMedico) {
         List<CitaMedica> lista = new ArrayList<>();
-        ConexionBD conexion = new ConexionBD();
 
-        try (java.sql.Connection con = conexion.conexion()) {
+        try (Connection con = ConexionBD.getInstancia().getConexion()) {
             String sql = "SELECT * FROM citas WHERE medico = ?";
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreMedico);
@@ -148,7 +144,7 @@ public class CitaDAO {
     public static boolean actualizarEstadoCita(int id, String estado) {
     String sql = "UPDATE citas SET estado = ? WHERE id = ?";
 
-    try (java.sql.Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
 
         ps.setString(1, estado);
@@ -164,7 +160,7 @@ public class CitaDAO {
   }
     
     public static boolean eliminarCitaMedico(int id) {
-        try (java.sql.Connection con = new ConexionBD().conexion();
+        try (Connection con = ConexionBD.getInstancia().getConexion();
              java.sql.PreparedStatement ps = con.prepareStatement("DELETE FROM citas WHERE id = ?")) 
         {
              
@@ -179,7 +175,7 @@ public class CitaDAO {
     
     public String obtenerNombreMedico(String nomreMedico) {
     String nombreMedico = "";
-    try (java.sql.Connection con = new ConexionBD().conexion()) {
+    try (Connection con = ConexionBD.getInstancia().getConexion()) {
         String sql = "SELECT nombre FROM medicos WHERE id = ?";
         java.sql.PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, nombreMedico);
@@ -196,7 +192,7 @@ public class CitaDAO {
     public void actualizarHora(int idCita, String nuevaHora) {
     String sql = "UPDATE citas SET hora = ? WHERE id = ?";
 
-    try (java.sql.Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          java.sql.PreparedStatement stmt = con.prepareStatement(sql)) {  // No es necesario hacer cast
         stmt.setString(1, nuevaHora);
         stmt.setInt(2, idCita);
@@ -209,7 +205,7 @@ public class CitaDAO {
 public void actualizarFecha(int idCita, String nuevaFecha) {
     String sql = "UPDATE citas SET fecha = ? WHERE id = ?";
 
-    try (java.sql.Connection con = new ConexionBD().conexion();
+    try (Connection con = ConexionBD.getInstancia().getConexion();
          java.sql.PreparedStatement stmt = con.prepareStatement(sql)) {  // No es necesario hacer cast
         stmt.setString(1, nuevaFecha);
         stmt.setInt(2, idCita);
